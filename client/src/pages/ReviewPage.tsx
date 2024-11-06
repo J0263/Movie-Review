@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { fetchMovieData } from '../api/movieApi'; 
-// import Auth from '../utils/auth'; 
 
 const ReviewPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -8,19 +7,28 @@ const ReviewPage: React.FC = () => {
     const [reviews, setReviews] = useState<any[]>([]);
     const [reviewText, setReviewText] = useState('');
     const [rating, setRating] = useState<number>(0);
-    
+    const [loading, setLoading] = useState<boolean>(false);
+
     const handleSearch = async () => {
         if (searchTerm) {
+            setLoading(true);
             try {
                 const data = await fetchMovieData(searchTerm);
                 setMovieData(data);
             } catch (error) {
                 console.error('Error fetching movie:', error);
+            } finally {
+                setLoading(false);
             }
         }
     };
 
     const handleSubmitReview = () => {
+        if (!movieData || !reviewText) {
+            alert('Please select a movie and write a review before submitting.');
+            return;
+        }
+
         const newReview = { movieTitle: movieData.Title, review: reviewText, rating, imdbID: movieData.imdbID };
         const updatedReviews = [...reviews, newReview];
         setReviews(updatedReviews);
@@ -39,8 +47,14 @@ const ReviewPage: React.FC = () => {
     return (
         <div>
             <h1>Review a Movie</h1>
-            <input type="text" placeholder="Search for a movie..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+            <input
+                type="text"
+                placeholder="Search for a movie..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
             <button onClick={handleSearch}>Search</button>
+            {loading && <p>Loading...</p>}
 
             {movieData && (
                 <div>
@@ -48,11 +62,21 @@ const ReviewPage: React.FC = () => {
                     <img src={movieData.Poster} alt={movieData.Title} />
                     <button onClick={() => setReviewText('')}>Review This Movie</button>
                     <div>
-                        <textarea value={reviewText} onChange={(e) => setReviewText(e.target.value)} placeholder="Write your review here..." />
+                        <textarea
+                            value={reviewText}
+                            onChange={(e) => setReviewText(e.target.value)}
+                            placeholder="Write your review here..."
+                        />
                         <div>
                             <span>Rate this movie: </span>
                             {[1, 2, 3, 4, 5].map((star) => (
-                                <span key={star} onClick={() => setRating(star)} style={{ cursor: 'pointer', color: star <= rating ? 'gold' : 'gray' }}>★</span>
+                                <span
+                                    key={star}
+                                    onClick={() => setRating(star)}
+                                    style={{ cursor: 'pointer', color: star <= rating ? 'gold' : 'gray' }}
+                                >
+                                    ★
+                                </span>
                             ))}
                         </div>
                         <button onClick={handleSubmitReview}>Post Review</button>
