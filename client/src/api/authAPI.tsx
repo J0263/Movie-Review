@@ -23,7 +23,7 @@ const login = async (userInfo: UserLogin) => {
 
     return data;  // Return the data received from the server
   } catch (err) {
-    console.log('Error from user login: ', err);  // Log any errors that occur during fetch
+    console.log('Error from user login: ', err);  git status// Log any errors that occur during fetch
     return Promise.reject('Could not fetch user info');  // Return a rejected promise with an error message
   }
 }
