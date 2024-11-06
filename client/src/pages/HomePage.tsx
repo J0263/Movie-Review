@@ -39,26 +39,26 @@ const HomePage: React.FC = () => {
         return() => clearInterval(interval);
     }, [movies]);
 
-    // // if (movies.length === 0) return <Loading>Loading top movies...</Loading>;
+    if (movies.length === 0) return <Loading>Loading top movies...</Loading>;
 
-    // // const { Title, Year, Poster } = movies[currentIndex];
+    const { Title, Year, Poster } = movies[currentIndex];
 
-    // // return (
-    // //     <Container>
-    // //         <Header />
-    // //         <Content>
-    // //             <TitleText>Top Movies of the Month</TitleText>
-    // //             <MovieContainer>
-    // //                 <Poster src={Poster !== 'N/A' ? Poster : 'https://via.placeholder.com/300'} alt={Title} />
-    // //                 <MovieInfo>
-    // //                     <MovieTitle>{Title}</MovieTitle>
-    // //                     <MovieYear>({Year})</MovieYear>
-    // //                 </MovieInfo>
-    // //             </MovieContainer>
-    // //         </Content>
-    // //         <Footer />
-    // //     </Container>
-    // );
+    return (
+        <Container>
+            <Header />
+            <Content>
+                <TitleText>Top Movies of the Month</TitleText>
+                <MovieContainer>
+                    <Poster src={Poster !== 'N/A' ? Poster : 'https://via.placeholder.com/300'} alt={Title} />
+                    <MovieInfo>
+                        <MovieTitle>{Title}</MovieTitle>
+                        <MovieYear>({Year})</MovieYear>
+                    </MovieInfo>
+                </MovieContainer>
+            </Content>
+            <Footer />
+        </Container>
+    );
 };
 
 export default HomePage;
