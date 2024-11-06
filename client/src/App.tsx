@@ -6,7 +6,7 @@ import Footer from './components/Footer';
 import SearchPage from './pages/SearchPage';
 // import WatchedPage from './pages/WatchedPage';
 // import ReviewPage from './pages/ReviewPage';
-// import LoginPage from './pages/LoginPage';
+import LoginPage from './pages/LoginPage';
 import './App.css';
 
 function App() {
@@ -21,9 +21,9 @@ function App() {
           <Routes>
             {/* <Route path="/" element={<HomePage />} /> */}
             <Route path="/search" element={<SearchPage />} />
-            {/* <Route path="/your-watched" element={<WatchedPage />} />
-            <Route path="/write-review" element={<ReviewPage />} />
-            <Route path="/login" element={<LoginPage />} /> */}
+            {/* <Route path="/your-watched" element={<WatchedPage />} /> */}
+            {/* <Route path="/write-review" element={<ReviewPage />} /> */}
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </main>
         
