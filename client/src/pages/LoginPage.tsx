@@ -1,5 +1,5 @@
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 import {useState, FormEvent, ChangeEvent} from "react";
 import Auth from '../utils/auth';  // Import the Auth utility for managing authentication state
@@ -36,6 +36,7 @@ const Login = () => {
     
       return (
         <div className='form-container'>
+          <Header></Header>
           <form className='form login-form' onSubmit={handleSubmit}>
             <h1>Login</h1>
             {/* Username input field */}
@@ -65,6 +66,7 @@ const Login = () => {
               <button className="btn btn-primary" type='submit'>Login</button>
             </div>
           </form>
+          {/* <Footer></Footer> */}
         </div>
       )
     };
