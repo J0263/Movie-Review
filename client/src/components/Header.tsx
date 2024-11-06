@@ -5,61 +5,73 @@ import axios from 'axios';
 // styles for the header container
 const headerStyles: React.CSSProperties = {
   display: 'flex',
-  flexDirection: 'column',
   alignItems: 'center',
-  backgroundColor: '#280004', // main background color
-  position: 'sticky', // Change this to 'sticky'
-  top: 0,
-  width: '100vw',
-  zIndex: 1000,
-  boxSizing: 'border-box',
-  padding: '1rem 1.5rem',
-};
-
-const logoContainerStyles: React.CSSProperties = {
-  display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'center',
-  width: '100%',
-  boxSizing: 'border-box',
+  backgroundColor: '#280004', 
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  height: '60px', 
+  padding: '0 1.5rem', 
+  zIndex: 1000,
 };
 
+// styles for the logo text
 const logoStyles: React.CSSProperties = {
   fontSize: '2rem',
-  color: '#F0FFCE',
+  color: '#F0FFCE', 
 };
 
+// styles for the navigation menu
 const navStyles: React.CSSProperties = {
   display: 'flex',
-  gap: '1.5rem',
   alignItems: 'center',
+  gap: '1.5rem',
 };
 
+// styles for each link in the navigation menu
 const linkStyles: React.CSSProperties = {
-  color: '#CCC9A1',
+  color: '#CCC9A1', 
   textDecoration: 'none',
   fontSize: '1.2rem',
   fontWeight: 'normal',
   transition: 'color 0.3s',
 };
 
+// styles for the search input and button
+const inputStyles: React.CSSProperties = {
+  padding: '0.5rem',
+  border: 'none',
+  borderRadius: '4px',
+  marginRight: '0.5rem',
+};
+
+// styles for the search button
+const buttonStyles: React.CSSProperties = {
+  backgroundColor: '#A53F2B', 
+  color: '#FFF', 
+  padding: '0.5rem 1rem',
+  border: 'none',
+  borderRadius: '4px',
+  cursor: 'pointer',
+};
+
 const Header: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState(''); // State for the search input
-  const navigate = useNavigate(); // Hook to navigate to the search results page
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value); // Update the search term state
+    setSearchTerm(event.target.value);
   };
 
   const handleSearch = async (event: React.FormEvent) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
     if (searchTerm) {
       try {
-        const apiKey = process.env.REACT_APP_OMDB_API_KEY; // Use your API key here
+        const apiKey = process.env.REACT_APP_OMDB_API_KEY;
         const response = await axios.get(`http://www.omdbapi.com/?s=${searchTerm}&apikey=${apiKey}`);
-        // Handle the response data, e.g., navigate to a results page
-        console.log(response.data); // For testing, log the results to the console
-        navigate('/search', { state: { results: response.data } }); // Navigate to search page with results
+        navigate('/search', { state: { results: response.data } });
       } catch (error) {
         console.error('Error fetching data from the API', error);
       }
@@ -68,24 +80,22 @@ const Header: React.FC = () => {
 
   return (
     <header style={headerStyles}>
-      <div style={logoContainerStyles}>
-        <h1 style={logoStyles}>Reel Reviews</h1>
-        <nav style={navStyles}>
-          <form onSubmit={handleSearch} style={{ display: 'flex', alignItems: 'center' }}>
-            <input
-              type="text"
-              placeholder="Search for a movie..."
-              value={searchTerm}
-              onChange={handleInputChange}
-              style={{ padding: '0.5rem', borderRadius: '4px' }}
-            />
-            <button type="submit" style={{ marginLeft: '0.5rem', padding: '0.5rem' }}>Search</button>
-          </form>
-          <a href="#your-watched" style={linkStyles}>Your Watched</a>
-          <a href="#write-review" style={linkStyles}>Write a Review</a>
-          <a href="#login" style={linkStyles}>Login</a>
-        </nav>
-      </div>
+      <h1 style={logoStyles}>Reel Reviews</h1>
+      <form onSubmit={handleSearch} style={{ display: 'flex', alignItems: 'center' }}>
+        <input
+          type="text"
+          placeholder="Search for a movie..."
+          value={searchTerm}
+          onChange={handleInputChange}
+          style={inputStyles}
+        />
+        <button type="submit" style={buttonStyles}>Search</button>
+      </form>
+      <nav style={navStyles}>
+        <a href="#your-watched" style={linkStyles}>Your Watched</a>
+        <a href="#write-review" style={linkStyles}>Write a Review</a>
+        <a href="#login" style={linkStyles}>Login</a>
+      </nav>
     </header>
   );
 };
