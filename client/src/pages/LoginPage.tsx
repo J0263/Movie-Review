@@ -1,10 +1,10 @@
 import React, { useState, FormEvent, ChangeEvent } from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
 import Auth from '../utils/auth';  // Import the Auth utility for managing authentication state
 import { login } from "../api/authAPI";  // Import the login function from the API
 import { UserLogin } from "../interfaces/UserLogin";  // Import the interface for UserLogin
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import Header from './components/Header';
+import Footer from './components/Footer';
+
 
 
 // majority code from activity 25
@@ -36,6 +36,7 @@ const Login = () => {
     
       return (
         <div className='form-container'>
+          <Header></Header>
           <form className='form login-form' onSubmit={handleSubmit}>
             <h1>Login</h1>
             {/* Username input field */}
@@ -65,6 +66,7 @@ const Login = () => {
               <button className="btn btn-primary" type='submit'>Login</button>
             </div>
           </form>
+          {/* <Footer></Footer> */}
         </div>
       )
     };
