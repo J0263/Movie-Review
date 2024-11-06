@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
 // styles for the header container
@@ -61,19 +61,22 @@ const Header: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
+  // handle input change for search bar
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
+  // handle search action when form is submitted
   const handleSearch = async (event: React.FormEvent) => {
     event.preventDefault();
     if (searchTerm) {
       try {
         const apiKey = process.env.REACT_APP_OMDB_API_KEY;
+        // Fetching movie data from the OMDb API
         const response = await axios.get(`http://www.omdbapi.com/?s=${searchTerm}&apikey=${apiKey}`);
-        navigate('/search', { state: { results: response.data } });
+        navigate('/search', { state: { results: response.data } }); // Navigate to search results page
       } catch (error) {
-        console.error('Error fetching data from the API', error);
+        console.error('Error fetching data from the API', error); // Log any API errors
       }
     }
   };
@@ -92,9 +95,9 @@ const Header: React.FC = () => {
         <button type="submit" style={buttonStyles}>Search</button>
       </form>
       <nav style={navStyles}>
-        <a href="#your-watched" style={linkStyles}>Your Watched</a>
-        <a href="#write-review" style={linkStyles}>Write a Review</a>
-        <a href="#login" style={linkStyles}>Login</a>
+        <Link to="/your-watched" style={linkStyles}>Your Watched</Link>
+        <Link to="/write-review" style={linkStyles}>Write a Review</Link>
+        <Link to="/login" style={linkStyles}>Login</Link>
       </nav>
     </header>
   );
