@@ -1,80 +1,78 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const headerStyles = {
+// styles for the header container
+const headerStyles: React.CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
-  backgroundColor: 'rgba(0, 0, 0, 0.9)',
+  alignItems: 'flex-end', // Align items to the right
+  backgroundColor: '#280004', // main background color
   position: 'fixed',
   top: 0,
-  width: '100vw',
+  width: '100%', // Use 100% instead of 100vw to avoid horizontal scrolling
   zIndex: 1000,
   boxSizing: 'border-box',
-  transition: 'height 0.3s', // Smooth transition for expanding/collapsing
+  padding: '1rem 1.5rem',
+  overflow: 'hidden', // Prevent overflow
 };
 
-const logoContainerStyles = {
+// styles for the logo and menu container
+const logoContainerStyles: React.CSSProperties = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   width: '100%',
-  padding: '1rem 1.5rem',
   boxSizing: 'border-box',
 };
 
-const logoStyles = {
-  fontSize: '1.8rem',
-  color: '#FFF',
+// styles for the logo text
+const logoStyles: React.CSSProperties = {
+  fontSize: '2rem',
+  color: '#F0FFCE', // title color
 };
 
-const navStyles = {
+// styles for the navigation menu
+const navStyles: React.CSSProperties = {
   display: 'flex',
-  flexDirection: 'column',
+  flexWrap: 'wrap', // Allow items to wrap to the next line
   gap: '1.5rem',
-  alignItems: 'center',
-  marginTop: '1.5rem',
+  alignItems: 'flex-start', // Align items to the top
+  justifyContent: 'flex-end', // Align items to the right
+  width: '100%', // Ensure the nav takes the full width
 };
 
-const linkStyles = {
-  color: '#FFF',
+// styles for each link in the navigation menu
+const linkStyles: React.CSSProperties = {
+  color: '#CCC9A1', // default link color
   textDecoration: 'none',
-  fontSize: '1.5rem',
+  fontSize: '1.2rem',
   fontWeight: 'normal',
-  textAlign: 'center',
   transition: 'color 0.3s',
 };
 
-const toggleButtonStyles = {
-  backgroundColor: 'transparent',
-  color: '#FFF',
-  fontSize: '1.5rem',
-  border: 'none',
-  cursor: 'pointer',
+// additional styles for link hover and active states
+const linkHoverStyles: React.CSSProperties = {
+  color: '#A53F2B', // link hover color
 };
 
-const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const activeLinkStyles: React.CSSProperties = {
+  backgroundColor: '#4C230A', // active link background color
+  padding: '0.5rem 1rem',
+  borderRadius: '4px',
+};
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
+// define the Header component as a functional component with React.FC type
+const Header: React.FC = () => {
   return (
-    <header style={{ ...headerStyles, height: isOpen ? '100vh' : 'auto' }}>
+    <header style={headerStyles}>
       <div style={logoContainerStyles}>
-        <h1 style={logoStyles}>Jorge Bush</h1>
-        <button style={toggleButtonStyles} onClick={toggleMenu}>
-          {isOpen ? '✕' : '☰'}
-        </button>
-      </div>
-      {isOpen && (
+        <h1 style={logoStyles}>Reel Reviews</h1>
         <nav style={navStyles}>
-          <a href="#about" style={linkStyles} onClick={toggleMenu}>About Me</a>
-          <a href="#portfolio" style={linkStyles} onClick={toggleMenu}>Portfolio</a>
-          <a href="#contact" style={linkStyles} onClick={toggleMenu}>Contact</a>
-          <a href="#resume" style={linkStyles} onClick={toggleMenu}>Resume</a>
+          <a href="#search" style={{ ...linkStyles, ...activeLinkStyles }}>Search</a>
+          <a href="#your-watched" style={linkStyles}>Your Watched</a>
+          <a href="#write-review" style={linkStyles}>Write a Review</a>
+          <a href="#login" style={linkStyles}>Login</a>
         </nav>
-      )}
+      </div>
     </header>
   );
 };
