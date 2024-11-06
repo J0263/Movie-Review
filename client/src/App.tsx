@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -9,7 +8,7 @@ import ReviewPage from './pages/ReviewPage';
 import LoginPage from './pages/LoginPage';
 import './App.css';
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Router>
       <div className="app">
