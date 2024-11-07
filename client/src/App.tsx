@@ -3,7 +3,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 // import HomePage from './pages/HomePage'; 
 import SearchPage from './pages/SearchPage';
-// import WatchedPage from './pages/WatchedPagthae'; 
+// import WatchedPage from './pages/WatchedPage'; 
 import ReviewPage from './pages/ReviewPage';
 import LoginPage from './pages/LoginPage';
 import './App.css';

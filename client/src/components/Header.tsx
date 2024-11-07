@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { fetchMovieData } from '../api/movieApi'; 
 
 // styles for the header container
 const headerStyles: React.CSSProperties = {
