@@ -52,3 +52,13 @@
 .link:hover {
   color: #A53F2B; /* hover color */
 }
+
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none; /* Hide the navigation menu */
+  }
+  
+  .hamburger-icon {
+    display: block; /* Show the hamburger icon */
+  }
+}

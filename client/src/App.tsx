@@ -17,6 +17,7 @@ const App = () => {
           <Routes>
             {/* <Route path="/" element={<HomePage />} /> */}
             <Route path="/search" element={<SearchPage />} />
+            <Route path="/review/:imdbID" element={<ReviewPage />} />
             {/* <Route path="/your-watched" element={<WatchedPage />} /> */}
             <Route path="/write-review" element={<ReviewPage />} />
             <Route path="/login" element={<LoginPage />} />

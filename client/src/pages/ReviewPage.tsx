@@ -69,8 +69,8 @@ const ReviewPage: React.FC = () => {
             {loading && <p>Loading...</p>}
             {movieData && movieData.Response === "True" && (
                 <div>
-                    <h2>{movieData.Title}</h2> {/* Display only the movie title */}
-                    {/* Removed the image element */}
+                    <h2>{movieData.Title}</h2> {/* Display movie title */}
+                    <img src={movieData.Poster} alt={movieData.Title} style={{ width: '200px' }} /> {/* Display movie poster */}
                     <div>
                         <textarea
                             value={reviewText}
@@ -105,4 +105,4 @@ const ReviewPage: React.FC = () => {
     );
 };
 
-export default ReviewPage; 
+export default ReviewPage;
