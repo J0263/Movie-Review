@@ -2,7 +2,7 @@
 import { Router } from 'express';
 
 // importing fetchMovieData controller function to handle movie data fetching logic
-import { fetchMovieData } from '../../controllers/movieController';
+import { fetchMovieData } from '../../controllers/movieController.js';
 
 // creating new router instance
 const router = Router();
