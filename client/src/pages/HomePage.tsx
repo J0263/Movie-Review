@@ -13,52 +13,52 @@ interface Movie {
 }
 
 const HomePage: React.FC = () => {
-    // const [movies, setMovies] = useState<Movie[]>([]);
-    // const [currentIndex, setCurrentIndex] = useState(0);
+    const [movies, setMovies] = useState<Movie[]>([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
-    // useEffect(() => {
-    //     const fetchTopMovies = async () => {
-    //     try {
-    //         const response = await fetch(`https://www.omdbapi.com/?s=top&type=movie&apikey=${API_KEY}`);
-    //         const data = await response.json();
-    //         if (data.Response === 'True') {
-    //             setMovies(data.Search);
-    //         }
-    //     } catch (err) {
-    //       console.error("Failed to fetch movies:", err);
-    //     }
-    //     };
+    useEffect(() => {
+        const fetchTopMovies = async () => {
+        try {
+            const response = await fetch(`https://www.omdbapi.com/?s=top&type=movie&apikey=${API_KEY}`);
+            const data = await response.json();
+            if (data.Response === 'True') {
+                setMovies(data.Search);
+            }
+        } catch (err) {
+          console.error("Failed to fetch movies:", err);
+        }
+        };
 
-    //     fetchTopMovies();
-    // }, []);
+        fetchTopMovies();
+    }, []);
 
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         setCurrentIndex((prevIndex) => (prevIndex + 1) % movies.length);
-    //     }, 5000);
-    //     return() => clearInterval(interval);
-    // }, [movies]);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % movies.length);
+        }, 5000);
+        return() => clearInterval(interval);
+    }, [movies]);
 
-    // // if (movies.length === 0) return <Loading>Loading top movies...</Loading>;
+    if (movies.length === 0) return <div>Loading top movies...</div>;
 
-    // const { Title, Year, Poster } = movies[currentIndex];
+    const { Title, Year, Poster } = movies[currentIndex];
 
     return (
-        <div>Hello</div>
-        // <Container>
-        //     <Header />
-        //     <Content>
-        //         <TitleText>Top Movies of the Month</TitleText>
-        //         <MovieContainer>
-        //             <Poster src={Poster !== 'N/A' ? Poster : 'https://via.placeholder.com/300'} alt={Title} />
-        //             <MovieInfo>
-        //                 <MovieTitle>{Title}</MovieTitle>
-        //                 <MovieYear>({Year})</MovieYear>
-        //             </MovieInfo>
-        //         </MovieContainer>
-        //     </Content>
-        //     <Footer />
-        // </Container>
+        // <div>Hello</div>
+        <div className='top-movie-container'>
+            <Header />
+            <div className='top-movie-content'>
+                <div>Top Movies of the Month</div>
+                <div>
+                    <Poster src={Poster !== 'N/A' ? Poster : 'https://via.placeholder.com/300'} alt={Title} />
+                    <div>
+                        <div>{Title}</div>
+                        <div>({Year})</div>
+                    </div>
+                </div>
+            </div>
+            <Footer />
+        </div>
     );
 };
 
