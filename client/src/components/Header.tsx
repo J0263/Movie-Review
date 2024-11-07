@@ -66,15 +66,20 @@ const Header: React.FC = () => {
     setSearchTerm(event.target.value);
   };
 
-  // handle search action when form is submitted
-  const handleSearch = async (event: React.FormEvent) => {
+   // handle search action when form is submitted
+   const handleSearch = async (event: React.FormEvent) => {
     event.preventDefault();
     if (searchTerm) {
       try {
-        const apiKey = process.env.REACT_APP_OMDB_API_KEY;
-        // Fetching movie data from the OMDb API
-        const response = await axios.get(`http://www.omdbapi.com/?s=${searchTerm}&apikey=${apiKey}`);
-        navigate('/search', { state: { results: response.data } }); // Navigate to search results page
+        const apiKey = import.meta.env.VITE_REACT_APP_OMDB_API_KEY
+        // Fetching movie data from the OMDb API using the search term
+        const response = await axios.get(`http://www.omdbapi.com/?s=${encodeURIComponent(searchTerm)}&type=movie&apikey=${apiKey}`);
+        
+        if (response.data.Response === "True") {
+          navigate('/search', { state: { results: response.data } }); // Navigate to search results page
+        } else {
+          alert('Movie not found!'); // Alert user if no movies are found
+        }
       } catch (error) {
         console.error('Error fetching data from the API', error); // Log any API errors
       }
@@ -83,7 +88,7 @@ const Header: React.FC = () => {
 
   return (
     <header style={headerStyles}>
-      <h1 style={logoStyles}>Reel Reviews</h1>
+      <Link to="/" style={logoStyles}>Reel Reviews</Link> {/* Make the title clickable */}
       <form onSubmit={handleSearch} style={{ display: 'flex', alignItems: 'center' }}>
         <input
           type="text"

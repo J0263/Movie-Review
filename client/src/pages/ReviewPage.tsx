@@ -1,55 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import { fetchMovieData } from '../api/movieApi'; 
-// import Auth from '../utils/auth'; 
 
 const ReviewPage: React.FC = () => {
-    // State variables
     const [searchTerm, setSearchTerm] = useState('');
-    const [movieData, setMovieData] = useState<any>(null); 
-    const [reviews, setReviews] = useState<any[]>([]); 
+    const [movieData, setMovieData] = useState<any>(null);
+    const [reviews, setReviews] = useState<any[]>([]);
     const [reviewText, setReviewText] = useState('');
     const [rating, setRating] = useState<number>(0);
-    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
-    // Handle movie search
-    const handleSearch = async () => {
-        setError(null); // Clear any previous errors
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const handleSearch = async (e: React.FormEvent) => {
+        e.preventDefault();
         if (searchTerm) {
+            setLoading(true);
             try {
-                const data = await fetchMovieData(searchTerm); 
+                const data = await fetchMovieData(searchTerm);
                 if (data.Response === "True") {
                     setMovieData(data);
+                    setSearchTerm('');
                 } else {
-                    setError(data.Error); // Set error message if movie not found
+                    alert(data.Error); // Handle case when no movie is found
                 }
             } catch (error) {
                 console.error('Error fetching movie:', error);
-                setError('Failed to fetch movie data.');
+            } finally {
+                setLoading(false);
             }
         }
     };
 
-    // Handle review submission
     const handleSubmitReview = () => {
-        if (!reviewText) {
-            setError('Please write a review before posting.'); // Ensure review text is provided
+        if (!movieData || !reviewText) {
+            alert('Please select a movie and write a review before submitting.');
             return;
         }
 
-        const newReview = {
-            movieTitle: movieData.Title,
-            review: reviewText,
-            rating: rating,
-            imdbID: movieData.imdbID,
-        };
+        const newReview = { movieTitle: movieData.Title, review: reviewText, rating, imdbID: movieData.imdbID };
         const updatedReviews = [...reviews, newReview];
         setReviews(updatedReviews);
         setReviewText('');
         setRating(0);
-        localStorage.setItem('movieReviews', JSON.stringify(updatedReviews)); 
+        localStorage.setItem('movieReviews', JSON.stringify(updatedReviews));
     };
 
-    // Load saved reviews from local storage on component mount
     useEffect(() => {
         const savedReviews = localStorage.getItem('movieReviews');
         if (savedReviews) {
@@ -60,45 +57,42 @@ const ReviewPage: React.FC = () => {
     return (
         <div>
             <h1>Review a Movie</h1>
-            <input
-                type="text"
-                placeholder="Search for a movie..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <button onClick={handleSearch}>Search</button>
-            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
-
-            {movieData && (
+            <form onSubmit={handleSearch}>
+                <input
+                    type="text"
+                    placeholder="Search for a movie..."
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                />
+                <button type="submit">Search</button>
+            </form>
+            {loading && <p>Loading...</p>}
+            {movieData && movieData.Response === "True" && (
                 <div>
-                    <h2>{movieData.Title}</h2>
-                    <img src={movieData.Poster} alt={movieData.Title} />
+                    <h2>{movieData.Title}</h2> {/* Display only the movie title */}
+                    {/* Removed the image element */}
                     <div>
-                        <button onClick={() => setReviewText('')}>Review This Movie</button>
+                        <textarea
+                            value={reviewText}
+                            onChange={(e) => setReviewText(e.target.value)}
+                            placeholder="Write your review here..."
+                        />
                         <div>
-                            <textarea
-                                value={reviewText}
-                                onChange={(e) => setReviewText(e.target.value)}
-                                placeholder="Write your review here..."
-                            />
-                            <div>
-                                <span>Rate this movie: </span>
-                                {[1, 2, 3, 4, 5].map((star) => (
-                                    <span
-                                        key={star}
-                                        onClick={() => setRating(star)}
-                                        style={{ cursor: 'pointer', color: star <= rating ? 'gold' : 'gray' }}
-                                    >
-                                        ★
-                                    </span>
-                                ))}
-                            </div>
-                            <button onClick={handleSubmitReview}>Post Review</button>
+                            <span>Rate this movie: </span>
+                            {[1, 2, 3, 4, 5].map((star) => (
+                                <span
+                                    key={star}
+                                    onClick={() => setRating(star)}
+                                    style={{ cursor: 'pointer', color: star <= rating ? 'gold' : 'gray' }}
+                                >
+                                    ★
+                                </span>
+                            ))}
                         </div>
+                        <button onClick={handleSubmitReview}>Post Review</button>
                     </div>
                 </div>
             )}
-
             <h2>Your Reviews</h2>
             {reviews.map((review, index) => (
                 <div key={index}>
@@ -111,4 +105,4 @@ const ReviewPage: React.FC = () => {
     );
 };
 
-export default ReviewPage;
+export default ReviewPage; 
