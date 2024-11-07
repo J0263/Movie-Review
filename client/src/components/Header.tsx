@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
-
 // styles for the header container
 const headerStyles: React.CSSProperties = {
   display: 'flex',
