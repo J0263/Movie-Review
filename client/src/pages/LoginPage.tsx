@@ -1,34 +1,48 @@
-import { useState, FormEvent, ChangeEvent } from 'react';
+import React, { useState, FormEvent, ChangeEvent } from 'react';
 import Auth from '../utils/auth';
 import { login } from "../api/authAPI"; 
 import { UserLogin } from "../interfaces/UserLogin";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const Login = () => {
-    // State to manage the login form data
+// define Login component type as React.FC
+const Login: React.FC = () => {
+    // state for managing login data
     const [loginData, setLoginData] = useState<UserLogin>({
         username: '',
         password: ''
     });
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setLoginData({
-            ...loginData,
+    // additional state to manage error messages
+    const [errorMessage, setErrorMessage] = useState<string>(''); 
+
+    // event handler for form input changes
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        // use type assertion to specify e.target as HTMLInputElement
+        const target = e.target as HTMLInputElement; 
+        const name = target.name; 
+        const value = target.value; 
+
+        // update loginData state with prevState for controlled state updates
+        setLoginData(prevState => ({
+            ...prevState,
             [name]: value
-        });
+        }));
     };
 
-    const handleSubmit = async (e: FormEvent) => {
+    // handle form submission
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // clear any previous error messages
+        setErrorMessage(''); 
         try {
-            // Call the login API endpoint with loginData
-            const data = await login(loginData);
-            // If login is successful, call Auth.login to store the token in localStorage
+            const data: { token: string } = await login(loginData);
             Auth.login(data.token);
+            // optional: add navigation after login
         } catch (err) {
-            console.error('Failed to login', err);  // Log any errors that occur during login
+            console.error('Failed to login', err);
+            // set an error message to inform user of invalid credentials
+            setErrorMessage('Invalid username or password. Please try again.'); 
         }
     };
 
@@ -37,34 +51,41 @@ const Login = () => {
             <Header />
             <form className='form login-form' onSubmit={handleSubmit}>
                 <h1>Login</h1>
-                {/* Username input field */}
+                {/* conditionally display error message */}
+                {errorMessage && <p className="error-message">{errorMessage}</p>} 
+                
+                {/* username input field with linked label */}
                 <div className="form-group">
-                    <label>Username</label>
+                    <label htmlFor="username">Username</label>
                     <input 
                         className="form-input"
                         type='text'
                         name='username'
-                        value={loginData.username || ''}
+                        id='username' // add id to link label
+                        value={loginData.username}
                         onChange={handleChange}
                     />
                 </div>
-                {/* Password input field */}
+                
+                {/* password input field with linked label */}
                 <div className="form-group">
-                    <label>Password</label>
+                    <label htmlFor="password">Password</label>
                     <input 
                         className="form-input"
                         type='password'
                         name='password'
-                        value={loginData.password || ''}
+                        id='password' // add id to link label
+                        value={loginData.password}
                         onChange={handleChange}
                     />
                 </div>
-                {/* Submit button for the login form */}
+                
+                {/* submit button */}
                 <div className="form-group">
                     <button className="btn btn-primary" type='submit'>Login</button>
                 </div>
             </form>
-            <Footer /> {/* Uncommented this line to use the Footer component */}
+            <Footer />
         </div>
     );
 };

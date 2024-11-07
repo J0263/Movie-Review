@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { fetchMovieData } from '../api/movieApi'; 
 
 const ReviewPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [movieData, setMovieData] = useState<any>(null); 
+    const [movieData, setMovieData] = useState<any>(null);
     const [reviews, setReviews] = useState<any[]>([]);
     const [reviewText, setReviewText] = useState('');
     const [rating, setRating] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const handleSearch = async () => {
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const handleSearch = async (e: React.FormEvent) => {
+        e.preventDefault();
         if (searchTerm) {
             setLoading(true);
             try {
                 const data = await fetchMovieData(searchTerm);
-                setMovieData(data);
+                if (data.Response === "True") {
+                    setMovieData(data);
+                    setSearchTerm('');
+                } else {
+                    alert(data.Error); // Handle case when no movie is found
+                }
             } catch (error) {
                 console.error('Error fetching movie:', error);
             } finally {
@@ -37,7 +47,7 @@ const ReviewPage: React.FC = () => {
         localStorage.setItem('movieReviews', JSON.stringify(updatedReviews));
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         const savedReviews = localStorage.getItem('movieReviews');
         if (savedReviews) {
             setReviews(JSON.parse(savedReviews));
@@ -47,20 +57,20 @@ const ReviewPage: React.FC = () => {
     return (
         <div>
             <h1>Review a Movie</h1>
-            <input
-                type="text"
-                placeholder="Search for a movie..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <button onClick={handleSearch}>Search</button>
+            <form onSubmit={handleSearch}>
+                <input
+                    type="text"
+                    placeholder="Search for a movie..."
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                />
+                <button type="submit">Search</button>
+            </form>
             {loading && <p>Loading...</p>}
-
-            {movieData && (
+            {movieData && movieData.Response === "True" && (
                 <div>
-                    <h2>{movieData.Title}</h2>
-                    <img src={movieData.Poster} alt={movieData.Title} />
-                    <button onClick={() => setReviewText('')}>Review This Movie</button>
+                    <h2>{movieData.Title}</h2> {/* Display only the movie title */}
+                    {/* Removed the image element */}
                     <div>
                         <textarea
                             value={reviewText}
@@ -83,7 +93,6 @@ const ReviewPage: React.FC = () => {
                     </div>
                 </div>
             )}
-
             <h2>Your Reviews</h2>
             {reviews.map((review, index) => (
                 <div key={index}>
@@ -96,4 +105,4 @@ const ReviewPage: React.FC = () => {
     );
 };
 
-export default ReviewPage;
+export default ReviewPage; 
