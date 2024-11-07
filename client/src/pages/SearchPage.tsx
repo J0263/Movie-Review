@@ -1,9 +1,9 @@
-import React from 'react'; 
-import { useLocation } from 'react-router-dom'; 
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 const SearchPage: React.FC = () => {
-  const location = useLocation(); // get current location from router
-  const { results } = location.state || { results: [] }; // extract results from location state or default to empty array
+    const location = useLocation();
+    const results = location.state?.results?.Search || []; // Access the results safely
 
   return (
     <div>
@@ -21,4 +21,4 @@ const SearchPage: React.FC = () => {
   );
 };
 
-export default SearchPage; 
+export default SearchPage;
