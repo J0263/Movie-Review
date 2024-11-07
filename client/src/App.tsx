@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
-// import HomePage from './pages/HomePage'; 
+import HomePage from './pages/HomePage'; 
 import SearchPage from './pages/SearchPage';
 // import WatchedPage from './pages/WatchedPagthae'; 
 import ReviewPage from './pages/ReviewPage';
@@ -11,7 +11,7 @@ import './App.css';
 const App = () => {
   return (
     <div>
-      {/* <HomePage/> */}
+      <HomePage/>
     <Router>
       
       <div className="app">
