@@ -62,3 +62,8 @@
     display: block; /* Show the hamburger icon */
   }
 }
+
+body, html {
+  background-color: #A29F9E; /* dark grey */
+  color: white; 
+}
