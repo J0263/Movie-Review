@@ -4,6 +4,7 @@ import { login } from "../api/authAPI";
 import { UserLogin } from "../interfaces/UserLogin";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 
 // define login component type as React.FC
 const Login: React.FC = () => {
@@ -50,6 +51,25 @@ const Login: React.FC = () => {
             <Header />
             <form className='form login-form' onSubmit={handleSubmit} >
                 <h1>Login🍿</h1>
+                <h3>
+                <div className="social-icons">
+        <p>Or sign in with:</p>
+        <div className="social-icon-links">
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+            <FaFacebook size={40} color="#4267B2" />
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+            <FaTwitter size={40} color="#1DA1F2" />
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+            <FaInstagram size={40} color="#C13584" />
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+            <FaLinkedin size={40} color="#0077B5" />
+          </a>
+        </div>
+        </div>
+                </h3>
                 {errorMessage && <p className="error-message">{errorMessage}</p>} 
             
                 <div className="form-group" >
@@ -76,9 +96,9 @@ const Login: React.FC = () => {
                         onChange={handleChange}
                     />
                 </div>
-                
+           
                 {/* submit button */}
-                <div className="form-group">
+                <div className="form-group" style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
                     <button className="btn btn-primary" type='submit'> Login ➡️ </button>
                 </div>
             </form>
