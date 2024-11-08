@@ -1,11 +1,10 @@
-// src/pages/MovieInfo.tsx
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { fetchMovieData } from '../api/movieApi';
 
 const MovieInfo: React.FC = () => {
     const location = useLocation(); // get current location from router
-    const { movieTitle } = location.state; // expecting movie title to be passed
+    const { movieTitle, reviewText } = location.state; // expecting movie title and review text to be passed
     const [movieData, setMovieData] = useState<any>(null); // state for movie data
     const [loading, setLoading] = useState<boolean>(true); // state for loading status
 
@@ -40,7 +39,7 @@ const MovieInfo: React.FC = () => {
                     <p>Actors: {movieData.Actors}</p>
                     <p>Box Office: {movieData.BoxOffice}</p>
                     <h2>Your Review</h2>
-                    {/* display  review based on the state pass from the ReviewPage */}
+                    <p>{reviewText}</p> {/* Display the review text */}
                 </div>
             ) : (
                 <p>Movie not found.</p>

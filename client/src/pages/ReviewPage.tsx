@@ -94,7 +94,7 @@ const ReviewPage: React.FC = () => {
                     </div>
                 </div>
             )}
-<h2>Your Reviews</h2>
+            <h2>Your Reviews</h2>
             {reviews.map((review, index) => (
                 <div key={index} style={{
                     border: '1px solid #ccc',

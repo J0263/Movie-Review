@@ -16,7 +16,7 @@ dotenv.config();
 // creating an instance of an Express app
 const app = express(); 
 // set the port for the server defaulting to 5000 if not specified
-const PORT = process.env.PORT || 5000; 
+const PORT = process.env.PORT || 3001; 
 
 // middleware to parse JSON request bodies
 app.use(express.json());
