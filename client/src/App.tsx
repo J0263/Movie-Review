@@ -11,7 +11,6 @@ import './App.css';
 const App = () => {
   return (
     <div>
-      <HomePage/>
     <Router>
       
       <div className="app">
