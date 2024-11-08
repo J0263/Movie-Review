@@ -50,10 +50,10 @@ const Login: React.FC = () => {
         <div className='form-container'>
             <Header />
             <form className='form login-form' onSubmit={handleSubmit} >
-                <h1>Login🍿</h1>
+                <h1>Login to Your Account🍿</h1>
                 <h3>
                 <div className="social-icons">
-        <p>Or sign in with:</p>
+        <p>Login using social networks</p>
         <div className="social-icon-links">
           <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
             <FaFacebook size={40} color="#4267B2" />
@@ -68,12 +68,13 @@ const Login: React.FC = () => {
             <FaLinkedin size={40} color="#0077B5" />
           </a>
         </div>
+        <h4>------- OR ------</h4>
         </div>
                 </h3>
                 {errorMessage && <p className="error-message">{errorMessage}</p>} 
             
                 <div className="form-group" >
-                    <label htmlFor="username">Username </label>
+                    <label htmlFor="username">Username 👤 </label>
                     <input 
                         className="form-input"
                         type='text'
@@ -86,7 +87,7 @@ const Login: React.FC = () => {
                 
                 {/* password input field with linked label */}
                 <div className="form-group">
-                    <label htmlFor="password">Password </label>
+                    <label htmlFor="password">Password 🔒 </label>
                     <input 
                         className="form-input"
                         type='password'
