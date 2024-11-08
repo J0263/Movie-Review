@@ -1,20 +1,20 @@
-// vite.config.ts
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 
-// Export the configuration using defineConfig
+// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
   server: {
-    port: 5173, // specify the desired port
-  },
-  define: {
-    'process.env': process.env, // Allow using process.env in your code
-  },
-  css: {
-    preprocessorOptions: {
-      sass: {
-        additionalData: `@import "src/styles/variables.scss";`, // Example for SASS
+    port: 3000,
+    open: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5202',
+        changeOrigin: true,
+        secure: false,
+      },
+      '/auth': {
+        target: 'http://localhost:5202',
+        changeOrigin: true,
+        secure: false
       },
     },
   },

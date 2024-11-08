@@ -38,10 +38,9 @@ const Login: React.FC = () => {
         try {
             const data: { token: string } = await login(loginData);
             Auth.login(data.token);
-            // optional: add navigation after login
         } catch (err) {
             console.error('Failed to login', err);
-            // set an error message to inform user of invalid credentials
+            //  an error message 
             setErrorMessage('Invalid username or password. Please try again.'); 
         }
     };
@@ -51,10 +50,8 @@ const Login: React.FC = () => {
             <Header />
             <form className='form login-form' onSubmit={handleSubmit}>
                 <h1>Login</h1>
-                {/* conditionally display error message */}
                 {errorMessage && <p className="error-message">{errorMessage}</p>} 
-                
-                {/* username input field with linked label */}
+            
                 <div className="form-group">
                     <label htmlFor="username">Username</label>
                     <input 
