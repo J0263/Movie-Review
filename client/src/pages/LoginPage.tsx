@@ -48,12 +48,12 @@ const Login: React.FC = () => {
     return (
         <div className='form-container'>
             <Header />
-            <form className='form login-form' onSubmit={handleSubmit}>
-                <h1>Login</h1>
+            <form className='form login-form' onSubmit={handleSubmit} >
+                <h1>Login🍿</h1>
                 {errorMessage && <p className="error-message">{errorMessage}</p>} 
             
-                <div className="form-group">
-                    <label htmlFor="username">Username</label>
+                <div className="form-group" >
+                    <label htmlFor="username">Username </label>
                     <input 
                         className="form-input"
                         type='text'
@@ -66,7 +66,7 @@ const Login: React.FC = () => {
                 
                 {/* password input field with linked label */}
                 <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Password </label>
                     <input 
                         className="form-input"
                         type='password'
@@ -79,7 +79,7 @@ const Login: React.FC = () => {
                 
                 {/* submit button */}
                 <div className="form-group">
-                    <button className="btn btn-primary" type='submit'>Login</button>
+                    <button className="btn btn-primary" type='submit'> Login ➡️ </button>
                 </div>
             </form>
             <Footer />
