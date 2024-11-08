@@ -1,19 +1,21 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
-// import HomePage from './pages/HomePage'; 
+import HomePage from './pages/HomePage'; 
 import SearchPage from './pages/SearchPage';
 import ReviewPage from './pages/ReviewPage';
 import './App.css';
 
 const App = () => {
   return (
+    <div>
     <Router>
+      
       <div className="app">
         <Header />
         <main>
           <Routes>
-            {/* <Route path="/" element={<HomePage />} /> */}
+            <Route path="/" element={<HomePage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/review/:imdbID" element={<ReviewPage />} />
             {/* <Route path="/your-watched" element={<WatchedPage />} /> */}
@@ -25,6 +27,7 @@ const App = () => {
         <Footer />
       </div>
     </Router>
+    </div>
   );
 };
 
