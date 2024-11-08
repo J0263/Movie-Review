@@ -1,20 +1,22 @@
 import { Router, Request, Response } from 'express';
-import { User } from '../../models/login.js';  // Import the User model ../models/user.js
+import { User } from '../../models/login.js';  // Import the User model 
 import jwt from 'jsonwebtoken';  // Import the JSON Web Token library
 import bcrypt from 'bcrypt';  // Import the bcrypt library for password hashing
 
 // Login function to authenticate a user
 export const login = async (req: Request, res: Response) => {
   const { username, password } = req.body;  // Extract username and password from request body
+console.log(username) 
+console.log(password)
 
   // Find the user in the database by username
   const user = await User.findOne({
-    where: { username },
+    where: { username: username },
   });
 
   // If user is not found, send an authentication failed response
   if (!user) {
-    return res.status(401).json({ message: 'Authentication failed' });
+    return res.status(401).json({ message: 'this doesnt work' });
   }
 
   // Compare the provided password with the stored hashed password

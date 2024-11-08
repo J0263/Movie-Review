@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 // import HomePage from './pages/HomePage'; 
 import SearchPage from './pages/SearchPage';
 import ReviewPage from './pages/ReviewPage';
+import LoginPage from './pages/LoginPage';
 import './App.css';
 
 const App = () => {
@@ -17,8 +18,8 @@ const App = () => {
             <Route path="/search" element={<SearchPage />} />
             {/* <Route path="/your-watched" element={<WatchedPage />} /> */}
             <Route path="/write-review" element={<ReviewPage />} />
-            {/* <Route path="/login" element={<LoginPage />} /> */}
-            <Route path="*" element={<div>Page not found</div>} /> {/* Fallback for unknown routes */}
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="" element={<div>Page not found</div>} /> {/* Fallback for unknown routes */}
           </Routes>
         </main>
         <Footer />
