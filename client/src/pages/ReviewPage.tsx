@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchMovieData } from '../api/movieApi'; 
+import { Link } from 'react-router-dom'; 
 
 const ReviewPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -23,7 +24,7 @@ const ReviewPage: React.FC = () => {
                     setMovieData(data);
                     setSearchTerm('');
                 } else {
-                    alert(data.Error); // Handle case when no movie is found
+                    alert(data.Error); 
                 }
             } catch (error) {
                 console.error('Error fetching movie:', error);
@@ -69,8 +70,8 @@ const ReviewPage: React.FC = () => {
             {loading && <p>Loading...</p>}
             {movieData && movieData.Response === "True" && (
                 <div>
-                    <h2>{movieData.Title}</h2> {/* Display movie title */}
-                    <img src={movieData.Poster} alt={movieData.Title} style={{ width: '200px' }} /> {/* Display movie poster */}
+                    <h2>{movieData.Title}</h2> 
+                    <img src={movieData.Poster} alt={movieData.Title} style={{ width: '200px' }} /> 
                     <div>
                         <textarea
                             value={reviewText}
@@ -93,10 +94,17 @@ const ReviewPage: React.FC = () => {
                     </div>
                 </div>
             )}
-            <h2>Your Reviews</h2>
+<h2>Your Reviews</h2>
             {reviews.map((review, index) => (
-                <div key={index}>
-                    <h3>{review.movieTitle}</h3>
+                <div key={index} style={{
+                    border: '1px solid #ccc',
+                    padding: '10px',          
+                    margin: '10px 0',        
+                    borderRadius: '5px',      
+                }}>
+                    <Link to={`/movie-info`} state={{ movieTitle: review.movieTitle, reviewText: review.review }}> {/* Pass the movieTitle and reviewText as state */}
+                        <h3>{review.movieTitle}</h3> {/* Wrap movie title in Link */}
+                    </Link>
                     <p>{review.review}</p>
                     <p>Rating: {review.rating} ⭐</p>
                 </div>

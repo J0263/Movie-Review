@@ -5,7 +5,7 @@ import { UserLogin } from "../interfaces/UserLogin";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-// define Login component type as React.FC
+// define login component type as React.FC
 const Login: React.FC = () => {
     // state for managing login data
     const [loginData, setLoginData] = useState<UserLogin>({
