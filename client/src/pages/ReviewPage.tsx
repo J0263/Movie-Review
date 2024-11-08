@@ -20,11 +20,14 @@ const ReviewPage: React.FC = () => {
             setLoading(true);
             try {
                 const data = await fetchMovieData(searchTerm);
-                if (data.Response === "True") {
+                if (typeof data==="object" && data && "Response" in data && data.Response==="True") {
                     setMovieData(data);
                     setSearchTerm('');
-                } else {
+                } else if (typeof data==="object" && data && "Error" in data) {
+
                     alert(data.Error); 
+                } else {
+                    alert("unspecified error occured");
                 }
             } catch (error) {
                 console.error('Error fetching movie:', error);

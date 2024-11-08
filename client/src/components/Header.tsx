@@ -93,7 +93,7 @@ const Header: React.FC = () => {
         const apiKey = import.meta.env.VITE_REACT_APP_OMDB_API_KEY;
         const response = await axios.get(`http://www.omdbapi.com/?s=${encodeURIComponent(searchTerm)}&type=movie&apikey=${apiKey}`);
         
-        if (response.data.Response === "True") {
+        if (typeof response.data==="object" && response.data && "Response" in response.data && response.data.Response==="True") {
           navigate('/search', { state: { results: response.data } });
         } else {
           alert('Movie not found!');
