@@ -27,16 +27,17 @@ export const fetchMovieData = async (req: Request, res: Response) => {
     // check if the response from OMDb is successful
     if (response.data.Response === "True") {
       // send the movie details and poster URL as a JSON response
-      res.json({
+      
+       return res.json({
         details: response.data, // movie details from OMDb
         poster: posterUrl       // URL for the movie poster
       });
     } else {
       // if OMDb response was unsuccessful send a 404 error with error message
-      res.status(404).json({ error: response.data.Error });
+       return res.status(404).json({ error: response.data.Error });
     }
   } catch (error) {
     // handle any errors in request and send a 500 error response
-    res.status(500).json({ error: 'Failed to fetch movie data' });
+    return res.status(500).json({ error: 'Failed to fetch movie data' });
   }
 };

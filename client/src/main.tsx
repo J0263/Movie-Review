@@ -9,19 +9,26 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>,
 )
 
-// import login from './pages/LoginPage.tsx'
-// import { createBrowserRouter } from 'react-router-dom'
+import Login from './pages/LoginPage.tsx'
+//./pages/LoginPage.tsx
+import { createBrowserRouter } from 'react-router-dom'
 // import Login from './pages/LoginPage.tsx'
 
-// const router = createBrowserRouter ([
-//   {
-//     path: '/',
-//     element: <App/>,
-//     children: [
-//       {
-//         index: true,
-//         element: <Login/>
-//       }
-//     ]
-//   }
-// ])
+const router = createBrowserRouter ([
+  {
+    path: '/',
+    element: <App/>,
+    children: [
+      {
+        index: true,
+        element: <Login/>
+      },
+    ]
+  }
+])
+
+// const rootElement = document.getElementById('root');
+// if (rootElement) {
+//   ReactDOM.createRoot(rootElement).render(<RouterProvider router={router} />);
+// }
+
