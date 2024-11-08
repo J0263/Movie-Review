@@ -6,12 +6,12 @@
     "outDir": "dist",
     
     /* Module Resolution */
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    // "moduleResolution": "node",
+    // "esModuleInterop": true,
+    // "skipLibCheck": true,
+    // "forceConsistentCasingInFileNames": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "eslint.config.js"],
+  // "exclude": ["node_modules", "eslint.config.js"],
   "typeRoots": ["./node_modules/@types", "./src/types"]
 }
