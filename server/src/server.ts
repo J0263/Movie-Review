@@ -28,7 +28,7 @@ app.use('/api/movies', movieRoutes);
 app.use('/auth', authRoutes);
 app.use('/api/users', userRouter);
 // start the server and listen on the specified port
-sequelize.sync({force:true}).then(() => {
+sequelize.sync({force:false}).then(() => {
   console.log(`Connected to database successfully.`);
   app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
