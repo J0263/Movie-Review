@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 
-// define Login component type as React.FC
+// define login component type as React.FC
 const Login: React.FC = () => {
     // state for managing login data
     const [loginData, setLoginData] = useState<UserLogin>({

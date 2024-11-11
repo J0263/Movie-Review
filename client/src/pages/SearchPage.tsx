@@ -1,24 +1,29 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 const SearchPage: React.FC = () => {
     const location = useLocation();
-    const results = location.state?.results?.Search || []; // Access the results safely
+    const results = location.state?.results?.Search || []; // access the results safely
 
-  return (
-    <div>
-      <h2>Search Results</h2> {/* display title for search results */}
-      {results && results.length > 0 ? ( // check if results exist and have length
-        <ul> 
-          {results.map((movie: any) => ( // iterate over results array
-            <li key={movie.imdbID}>{movie.Title}</li> // display movie title in list item
-          ))}
-        </ul> 
-      ) : (
-        <p>No results found.</p> 
-      )}
-    </div>
-  );
+    return (
+        <div>
+            <h2>Search Results</h2> {/* Display title for search results */}
+            {results && results.length > 0 ? ( 
+                <ul style={{ listStyleType: 'none', padding: 0 }}> {/* remove bullet points */}
+                    {results.map((movie: any) => ( 
+                        <li key={movie.imdbID}>
+                            <Link to={`/review/${movie.imdbID}`} style={{ textDecoration: 'none', color: 'black' }}> {/* link to ReviewPage with movie id */}
+                                <h2>{movie.Title}</h2> {/* display movie title */}
+                            </Link>
+                            <img src={movie.Poster} alt={movie.Title} /> {/* display movie poster */}
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No results found.</p> 
+            )}
+        </div>
+    );
 };
 
 export default SearchPage;

@@ -16,10 +16,12 @@ dotenv.config();
 // creating an instance of an Express app
 const app = express(); 
 // set the port for the server defaulting to 5000 if not specified
-const PORT = process.env.PORT || 5000; 
+const PORT = process.env.PORT || 3001; 
+app.use(express.static('../client/dist'));
 
 // middleware to parse JSON request bodies
 app.use(express.json());
+
 
 // set up the route for movie-related API requests under /api/movies
 app.use('/api/movies', movieRoutes);
