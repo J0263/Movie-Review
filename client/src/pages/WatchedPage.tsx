@@ -64,7 +64,13 @@ const WatchedPage = () => {
       <ul style={{ listStyleType: 'none', padding: 0 }}>
         {watchedMovies.length > 0 ? (
           watchedMovies.map((movie) => (
-            <li key={movie.imdbID} style={{ marginBottom: '20px', textAlign: 'center' }}>
+            <li key={movie.imdbID} style={{
+              border: '1px solid #ccc',
+              padding: '10px',
+              marginBottom: '20px',
+              textAlign: 'center',
+              borderRadius: '5px',
+            }}>
               <Link 
                 to={`/movie-info`} 
                 style={{ textDecoration: 'none', color: 'black' }}
