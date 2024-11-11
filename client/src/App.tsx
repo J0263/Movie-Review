@@ -7,6 +7,7 @@ import ReviewPage from './pages/ReviewPage';
 import MovieInfo from './pages/MovieInfo';
 import LoginPage from './pages/LoginPage';
 import './App.css';
+import WatchedPage from './pages/WatchedPage';
 
 const App = () => {
   return (
@@ -21,7 +22,7 @@ const App = () => {
             <Route path="/search" element={<SearchPage />} />
             <Route path="/review/:imdbID" element={<ReviewPage />} />
             <Route path="/movie-info" element={<MovieInfo />} />
-            {/* <Route path="/your-watched" element={<WatchedPage />} /> */}
+            <Route path="/your-watched" element={<WatchedPage/>} />
             <Route path="/write-review" element={<ReviewPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="" element={<div>Page not found</div>} /> {/* Fallback for unknown routes */}
