@@ -63,16 +63,16 @@ const menuStyles: React.CSSProperties = {
   flexDirection: 'column',
   position: 'absolute',
   backgroundColor: '#280004',
-  top: '60px', // Adjust based on header height
+  top: '60px', 
   left: 0,
   right: 0,
   zIndex: 1000,
-  alignItems: 'center', // Center items horizontally
+  alignItems: 'center', 
 };
 
 // styles for the menu button
 const menuButtonStyles: React.CSSProperties = {
-  display: 'none', // Initially hide the button
+  display: 'none', 
   cursor: 'pointer',
   color: '#CCC9A1',
 };
@@ -112,7 +112,7 @@ const Header: React.FC = () => {
     <header style={headerStyles}>
       <Link to="/" style={logoStyles}>Reel Reviews</Link>
       <div onClick={toggleMenu} style={{ ...menuButtonStyles, display: window.innerWidth < 768 ? 'block' : 'none' }}>
-        ☰ {/* Hamburger icon */}
+        ☰ 
       </div>
       {menuOpen && (
         <nav style={menuStyles}>
@@ -122,7 +122,7 @@ const Header: React.FC = () => {
               placeholder="Search for a movie..."
               value={searchTerm}
               onChange={handleInputChange}
-              style={{ ...inputStyles, flex: 1 }} // Allow input to take up available space
+              style={{ ...inputStyles, flex: 1 }} 
             />
             <button type="submit" style={buttonStyles}>Search</button>
           </form>
