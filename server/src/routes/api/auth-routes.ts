@@ -13,7 +13,6 @@ console.log(password)
   const user = await User.findOne({
     where: { username: username },
   });
-
   // If user is not found, send an authentication failed response
   if (!user) {
     return res.status(401).json({ message: 'this doesnt work' });
