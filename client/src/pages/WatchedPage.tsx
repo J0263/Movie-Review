@@ -1,51 +1,83 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-
-interface Movie {
+interface Review {
   imdbID: string;
-  Title: string;
-  Poster: string;
+  movieTitle: string;
+  review: string;
+  rating: number;
+}
+
+interface MovieDetails extends Review {
+  Year: string;
 }
 
 const WatchedPage = () => {
-  const [watchedMovies, setWatchedMovies] = useState<Movie[]>([]);
+  const [watchedMovies, setWatchedMovies] = useState<MovieDetails[]>([]);
+
+  // Define the type for the API response
+  interface ApiResponse {
+    Year: string;
+  }
+
+  // Function to fetch movie details based on imdbID
+  const fetchMovieDetails = async (imdbID: string): Promise<ApiResponse | null> => {
+    const API_KEY = import.meta.env.VITE_REACT_APP_OMDB_API_KEY;
+    try {
+      const response = await axios.get(`https://www.omdbapi.com/?i=${imdbID}&apikey=${API_KEY}`);
+      return response.data as ApiResponse;
+    } catch (error) {
+      console.error(`Error fetching data for imdbID ${imdbID}:`, error);
+      return null;
+    }
+  };
 
   useEffect(() => {
-    // Get the saved reviews from localStorage
-    const savedReviews = localStorage.getItem('movieReviews');
-    
-    if (savedReviews) {
-      // Parse the saved reviews data from localStorage
-      const parsedData = JSON.parse(savedReviews);
-      setWatchedMovies(parsedData?.watchedMovies || []); // Set the movies into state
-    }
-  }, []); // Empty dependency array ensures this runs only once, when the component mounts
+    const loadWatchedMovies = async () => {
+      const savedReviews = localStorage.getItem('movieReviews');
+      if (savedReviews) {
+        const parsedData: Review[] = JSON.parse(savedReviews);
+
+        // Fetch additional details for each movie in parallel
+        const moviesWithDetails = await Promise.all(
+          parsedData.map(async (review) => {
+            const movieDetails = await fetchMovieDetails(review.imdbID);
+            return {
+              ...review,
+              Year: movieDetails?.Year || 'N/A',
+            };
+          })
+        );
+
+        setWatchedMovies(moviesWithDetails as MovieDetails[]);
+      }
+    };
+
+    loadWatchedMovies();
+  }, []);
 
   return (
     <div>
       <h2>Your Watched List:</h2>
       
-      {/* If there are no movies, show a fallback message */}
-      <ul style={{ listStyleType: '200px', padding: 0 }}>
+      <ul style={{ listStyleType: 'none', padding: 0 }}>
         {watchedMovies.length > 0 ? (
           watchedMovies.map((movie) => (
             <li key={movie.imdbID} style={{ marginBottom: '20px', textAlign: 'center' }}>
               <Link 
-                to={`/movie-info/${movie.imdbID}`} 
+                to={`/movie-info`} 
                 style={{ textDecoration: 'none', color: 'black' }}
+                state={{ movieTitle: movie.movieTitle, reviewText: movie.review }}
               >
-                <h3>{movie.Title}</h3> {/* Display movie title */}
+                <h3>{movie.movieTitle} ({movie.Year})</h3> {/* Display title and year */}
               </Link>
-              <img 
-                src={movie.Poster !== "N/A" ? movie.Poster : 'https://via.placeholder.com/200'} 
-                alt={movie.Title} 
-                style={{ width: '200px', borderRadius: '8px', marginTop: '10px' }} 
-              /> {/* Display movie poster with fallback */}
+              <p>Rating: {movie.rating} ⭐</p> {/* Display rating */}
+              <p>Review: {movie.review}</p> {/* Display review text */}
             </li>
           ))
         ) : (
-          <p>No watched movies to display.</p> // Fallback message
+          <p>No watched movies to display.</p>
         )}
       </ul>
     </div>
